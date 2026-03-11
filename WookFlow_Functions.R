@@ -336,7 +336,7 @@ main_function = function(
         # raw l_priority
         output_csv(l_priority,"RawLowPriority_List.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
         # Nan agreements
-        output_csv(nan_entries,"Nan_Agreements.csv.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
+        output_csv(nan_entries,"Nan_Agreements.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
         # s_pos results for counting peptide identification per sample
         output_csv(s_pos_peptide_occurrence,"HighPriority_Species_Peptide_Count_Per_Sample.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
     }
