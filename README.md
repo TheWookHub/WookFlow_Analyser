@@ -31,22 +31,31 @@ User input for the tools is shown below:
 Options:
         --sample_table=SAMPLE_TABLE
                 Sample Table file (.csv) containing information on samples of PhIPSeq Output.
+        
         --peptide_table=PEPTIDE_TABLE
                 Peptide table file (.csv) containing information peptide info such as species, protein sequence etc.
+        
         --hits_table=HITS_TABLE
                 Hits file (.csv) containing information of peptide hits for each peptide for all samples.
+        
         --counts_table=COUNTS_TABLE
                 Counts table (.csv) containing information of peptide counts for each peptide for all samples.
+        
         --min_pos_agreement_count=MIN_POS_AGREEMENT_COUNT
                 Minimum positive agreement counts for a species to be acknowledged as identified. [Default: 15]
+        
         --min_pos_agreement_percent=MIN_POS_AGREEMENT_PERCENT
                 Minimum positive agreement percent (out of total agreements) for a species to be acknowledged as identified. [Default: 0.03]
+        
         --file_prefix=FILE_PREFIX
                 An optional user defined prefix character string to add to output file names.
+        
         --outpath=OUTPATH
                 An optional user defined output path to write output file to. [Default = Current Work Directory]
+        
         --comprehensive
                 If flagged, the program will generate additional outputs. E.g. Mid and Low priority findings.
+        
         -h, --help
                 Show this help message and exit
 ```
@@ -66,7 +75,6 @@ Rscript WookFlow_Analyser.R \
 --peptide_table /PATH/TO/peptide_table.csv \
 --hits_table /PATH/TO/hits.csv \
 --counts_table /PATH/TO/counts.csv 
-
 ```
 
 This will output **five** files:
@@ -75,6 +83,11 @@ This will output **five** files:
 3) `HighPriority_Species_Shared.csv` - viruses with peptide hits that satisfy conditions for being high priority while also been found in multiple samples.
 4) `PositiveAgreement_Plot.pdf` - A plot showing viral species (across all the samples) satisfying cutoff conditions (Top 5 viral species shown).
 5) `Strict_Positive_Mean_Hits_Counts.csv` - table of normalised hit counts (counts that were sufficiently above background for edgeR to accept as a hit) of peptides for eachs sample. Each value is a mean across the replicates.
+
+Example of `PositiveAgreement_Plot.pdf`:
+
+<img src="README_Figures/unnamed-chunk-6-1.png" width="1200" height="900" title="Example Plot 1">
+
 
 #### Using addtional parameters
 If you want to customise the file output names you can provide it with a prefix using the parameter `--file_prefix`. This will be added in front of the default file names so that it'll prevent you from overwriting the files if you were to output files in a common directory. For example, if you put `--file_prefix MANGO` then all the files will have `MANGO_` as the prefix. `HighPriority_Species_Shared.csv` -> `MANGO_HighPriority_Species_Shared.csv` etc.
@@ -93,13 +106,12 @@ Rscript WookFlow_Analyser.R \
 --counts_table /PATH/TO/counts.csv \
 --file_prefix MANGO \
 --outpath /kitchen/fridge
-
 ```
 
 The cut-offs used in this WookFlow Analyser is defaulted cater for data coming out of NextSeq sequencing platform. For different read count yields, you maybe have to adjust to suit the analysis. 
 Briefly:
 - `min_pos_agreement_count` is the sum of the true count (in which all replicates agree they have identified a peptide is a hit) of hits for peptides representing a viral species. This value is set at 15 as the default.
-- `min_pos_agreemnt_percent` is the `min_pos_agreement_count` divided by the total number of agreements (i.e. the number of peptides where all replicates agree that YES they identified a peptide as a hit **or** NO they collectively did not identify a peptide as a hit). This value is set at 0.03 as the default.
+- `min_pos_agreement_percent` is the `min_pos_agreement_count` divided by the total number of agreements (i.e. the number of peptides where all replicates agree that YES they identified a peptide as a hit **or** NO they collectively did not identify a peptide as a hit). This value is set at 0.03 as the default.
 
 This is mainly tackle the issue where not all viral species have the same number of peptide representation in the VirScan library. This approach is to normalise using what replicates all **agree** on, whether that be they agree on **not** finding a peptide as a hit or finding peptide as a hit.
 
@@ -116,6 +128,30 @@ Rscript WookFlow_Analyser.R \
 --min_pos_agreement_percent 0.02
 
 ```
+
+WookFlow Analyser does provide additional data sets but will only write them to file if the `--comprehensive` flag is provided in the command:
+
+Example code:
+```
+# note the additiona flag '--comprehensive' added to option list
+
+Rscript WookFlow_Analyser.R \
+--sample_table /PATH/TO/sample_table.csv \
+--peptide_table /PATH/TO/peptide_table.csv \
+--hits_table /PATH/TO/hits.csv \
+--counts_table /PATH/TO/counts.csv \
+--comprehensive
+```
+
+This flag tells WookFlow Analyser to output:
+
+1) `RawHighPriority_List.csv` - Raw high priority species list including those that were found only in a single sample.
+2) `RawMediumPriority_List.csv` - Viral species that made it past only one of the two cut offs (either 'min_pos_agreement_count' or 'min_pos_agreement_percent').
+3) `RawLowPriority_List.csv` - Viral species that failed both cut offs.
+4) `Nan_Agreements.csv` - Viral species that had no agreements found at all between replicates and resulted in a divide-by-zero situation.
+5) `HighPriority_Species_Peptide_Count_Per_Sample.csv` - The number of peptides from High Priority species found per sample.
+
+The above list of files may grow in number as more data is analysed and new and/or better ways of looking at data arises. 
 
 ### Contributors
 ---
