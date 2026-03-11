@@ -14,15 +14,15 @@ The **aim of this tool** is the assist in automatically identifying potential pe
 
 The tool uses basic R libraries (e.g. `optparse` and `scales`) which should already be included in any R and RStudio installation. You may need to install `tidyverse` if you don't have it. As this tool continues to update, we will create an environment in `docker` so it 
 will always run within it's happy environment. This is a future-me to-do though.
-
-## Detailed explanation
-
-*To be written.*
-
 ```
 install.packages("tidyverse")
 ```
- **NOTE**: Current tool focuses on VirScan. HuScan to be implemented over time.
+**NOTE**: Current tool focuses on VirScan. HuScan to be implemented over time.
+
+## More detailed explanation
+
+*To be written.*
+ 
 
 ## Parameters
 User input for the tools is shown below:
