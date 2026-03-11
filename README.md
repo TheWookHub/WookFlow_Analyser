@@ -83,8 +83,8 @@ By default, the output directory your current directory. To change this, use the
 
 Example code:
 ```
-# Providing user defined prefix for file names (e.g. Cheesecake) and
-# customising output file directory (e.g. inside path /kitchen/oven)
+# Providing user defined prefix for file names (e.g. MANGO) and
+# customising output file directory (e.g. inside path /kitchen/fridge)
 
 Rscript WookFlow_Analyser.R \
 --sample_table /PATH/TO/sample_table.csv \
