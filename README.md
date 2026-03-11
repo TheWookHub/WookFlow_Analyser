@@ -54,7 +54,8 @@ Options:
 Almost all of these files can be obtained from running WookFlow - Phippery analysis. For the `peptide_table`, it is the same data set provided as input when running WookFlow. 
 
 ## How to run
-To run the tool, we can first use the below basic command. This just provides all the necessary files for WookFlowAnalyser to not complain and do it's job. Of course, fill in `/PATH/TO/` with your actual directory path. 
+
+First clone/download this repository to some location of your choice on your computer. To run the tool, we can first use the below basic command. This just provides all the necessary files for WookFlowAnalyser to not complain and do it's job. Of course, fill in `/PATH/TO/` with your actual directory path. 
 
 Example code:
 ```
