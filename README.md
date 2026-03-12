@@ -2,27 +2,36 @@
 ----
 ## Introduction
 
-Phippery generates a bunch of useful outputs (such as hits and counts data) that is usually difficult to digest and/or interpret. Even after applying methods such as edgeR to help distinguish real hits using beads_only background samples, it is often the case that we don't really understand what the hits are suggesting and this leads to wavering confidence in what sort of viruses or peptides of viruses (in the case of VirScan) to take forward for downstream analysis.
+Phippery generates a bunch of useful outputs (such as hits and counts data) that are usually difficult to digest and/or interpret. After applying methods such as edgeR to help distinguish real hits from noise using beads-only background samples, it is often the case that we don't really understand what the hits are hinting at. This leads to wavering confidence in what sort of viruses or peptides of viruses (in the case of VirScan) to take forward for downstream analysis.
 
-Some questions that render interpretation of the outputs difficult include:
+Some questions surrounding PhIPSeq and Phippery that render interpretation of the outputs difficult include:
 
 1) How many peptide hits is sufficient to call a species to be identified by PhIPSeq?
 2) In the case of VirScan, there are different number of peptides representing a viral species. Can a hit in this case be treated equally for viral species that have vastly different number of representative peptides?
 3) Some viruses that were detected with hit peptides were not expected. If we accept the results some viral species, we must also accept these strange viral species too. How do we move forward?
 
-The **aim of this tool** is the assist in automatically identifying potential peptides as well as viral species (based on the peptides) and group them into high priority (likely found) and lower priority (probably a technical artifact from the method). This way we create a streamlined and automated approach to process data prior to downstream statistical analyses. While Phippery does output information of peptides and viral species, they are not compiled and summarised in an easy to digest way. Hence this tool also provides more detailed information for the peptides so that even without data science tools, readers can have a general idea about the samples they've used and what Phippery can tell them. 
+The **aim** of this tool is to assist by automatically identifying potential peptides and viral species (based on the peptides) then group them into high priority (likely found) and lower priority (probably a technical artifact from the method). This way we create a streamlined and automated approach to process data prior to downstream statistical analyses or any other experimental procedures. While Phippery does output information of peptides and viral species, they are not compiled and summarised in an easy to digest way. Hence this tool also provides more detailed information for the peptides so that even without data science tools, readers can have a general idea about the samples they've used and what Phippery can tell them.
 
-The tool uses basic R libraries (e.g. `optparse` and `scales`) which should already be included in any R and RStudio installation. You may need to install `tidyverse` if you don't have it. As this tool continues to update, we will create an environment in `docker` so it 
-will always run within it's happy environment. This is a future-me to-do though.
+The tool uses basic R libraries (e.g. `optparse` and `scales`) which should already be included in any R and RStudio installation. You may need to install `tidyverse` if you don't have it. As this tool continues to update, we will create an environment in `docker` so it will always run within it's happy environment. This is a future-me to-do though.
 ```
 install.packages("tidyverse")
 ```
-**NOTE**: Current tool focuses on VirScan. HuScan to be implemented over time.
+***NOTE**: Current tool focuses on VirScan. HuScan to be implemented over time. Only Strict filtering has been implemented for now.*
 
 ## More detailed explanation
 
-*To be written.*
- 
+WookFlow Analyser assumes that replicates were used during PhIPSeq runs (E.g. for VirScan our team usually performs **triplicates**, a choice that balances cost and results). Using the replicates, the tool decides whether edgeR results from Phippery are consistently called. It does this by considering agreements between replicates given the same sample. We define an agreement as:
+
+- Strict filtering:
+  1.  (YES/YES/YES & NO/NO/NO) is considered an agreement, while disagreement looks like (YES/NO/either)
+  2.  Within agreement, we can categorise Y/Y/Y as **strict positive agreement** and N/N/N as **strict negative agreement**.
+  3.  In the strict case we treat Y/Y/N and Y/N/N as general disagreement.
+
+In Strict Filtering, we will consider the normalisation of the **strict positive agreement** counts by dividing it with total agreements (Y/Y/Y and N/N/N) and call this the **agreement percent**. This helps us examine the condition where given all the ways which replicates can agree (negatively or positively), what proportion can fall under the category *“Yes all replicates positively agree to have found this peptide as a hit”*. Especially when we know that each species have a different number of representative peptides. E.g. enterovirus A have approxiately 1500 while HIV would have 2500. 
+
+The question is, if observing 15 **strict positive agreement** peptides for enterovirus A have the same weighting as observing 15 **strict positive agreement** for HIV knowing that there are more opportunities for HIV available?
+
+WookFlow Analyser then reports on the peptides and viral species identified using the above approach. We define a cutoff value of 15 for the **minimum positive agreement count**, represented by the parameter `min_pos_agreement_count` and a value of 0.03 for **minimum positive agreement percent** represented by the input parameter `min_pos_agreement_percent`. These cut offs are currently starting cut offs for the determining what viral species is considered likely detected by the program. As more data is analysed, these default values may be adjusted.  
 
 ## Parameters
 User input for the tools is shown below:
@@ -64,7 +73,9 @@ Almost all of these files can be obtained from running WookFlow - Phippery analy
 
 ## How to run
 
-First clone/download this repository to some location of your choice on your computer. To run the tool, we can first use the below basic command. This just provides all the necessary files for WookFlowAnalyser to not complain and do it's job. Of course, fill in `/PATH/TO/` with your actual directory path. 
+First clone/download this repository to some location of your choice on your computer. Make sure that `WookFlow_Functions.R` is in the same location as `WookFlow_Analyser.R` as it contains the functions required for the main script to run.
+
+To run the tool, we can first use the below basic command. This command provides all the necessary files for WookFlowAnalyser to not complain and do it's job. Of course, fill in `/PATH/TO/` with your actual directory path. 
 
 Example code:
 ```
