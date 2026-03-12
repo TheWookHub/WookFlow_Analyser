@@ -329,7 +329,7 @@ main_function = function(
     output_csv(s_pos_mean_hits_counts,"Strict_Positive_Mean_Hits_Counts.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
     
     if(!is.null(comprehensive_output)){
-        # raw l_priority
+        # raw h_priority
         output_csv(h_priority,"RawHighPriority_List.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
         # raw m_priority
         output_csv(m_priority,"RawMediumPriority_List.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
