@@ -342,11 +342,13 @@ main_function = function(
     }
     
     # Pos Agreement Plot
+    if(is.null(DEFAULT_PREFIX)){
+        plotfile = "PostiveAgreement_Plot.pdf"
+    }else{
+        plotfile = paste0(DEFAULT_PREFIX,"_","PostiveAgreement_Plot.pdf")    
+    }
     ggsave(
-        file.path(
-            DEFAULT_OUTPUTDIR,
-            paste0(DEFAULT_PREFIX,"_","PostiveAgreement_Plot.pdf")
-        ),
+        file.path(DEFAULT_OUTPUTDIR, plotfile),
         plot = myGraph1 + theme(aspect.ratio = 0.7),
         device = cairo_pdf,
         width = 1920,
@@ -362,7 +364,6 @@ main_function = function(
 
 # if file doesn't exist, we stop and produce error message
 # if it does exist, then we read in the file
-
 check_and_read_file = function(filePath){
     if(!file.exists(filePath)){
         stop(paste("File does not exist:",filePath))
