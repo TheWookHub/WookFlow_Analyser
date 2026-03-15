@@ -71,6 +71,18 @@ Options:
 
 Almost all of these files can be obtained from running WookFlow - Phippery analysis. For the `peptide_table`, it is the same data set provided as input when running WookFlow. 
 
+#### Table formats
+
+Since WookFlow Analyser takes outputs from WookFlow, there are requirements for some column titles to be specifically labeled.
+
+For `sample_table`:
+  - asdf
+
+For `peptide_table`:
+
+For `hits_table`:
+For `counts_table`:
+
 ## How to run
 
 First clone/download this repository to some location of your choice on your computer. Make sure that `WookFlow_Functions.R` is in the same location as `WookFlow_Analyser.R` as it contains the functions required for the main script to run.

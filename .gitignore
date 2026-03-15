@@ -4,3 +4,5 @@
 .Ruserdata
 *.csv
 *.pdf
+CDI_VirScan_Outputs
+Antigen_Landscape.R
