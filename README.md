@@ -255,10 +255,19 @@ This flag tells WookFlow Analyser to output:
 
 The above list of files may grow in number as more data is analysed and new and/or better ways of looking at data arises.
 
-## \### Contributors
+#### Contributors
 
-Organisms involved in the development of this tool: - Preston Leung
+Organisms involved in the development of this tool: 
 
-Organisms that assisted in testing this tool: - Hajra Waris
+- Preston Leung
 
-We also thank the following organisms for their extensive assistance (ideas, mental support, peace and silence etc..) in the development of this tool: - Ki Wook Kim - Peter Benjamin Parker - Legana Fingerhut - Bea Delgado-Corrales
+Organisms that assisted in testing this tool: 
+
+- Hajra Waris
+
+We also thank the following organisms for their extensive assistance (ideas, mental support, peace and silence etc..) in the development of this tool: 
+
+- Ki Wook Kim 
+- Peter Benjamin Parker 
+- Legana Fingerhut 
+- Bea Delgado-Corrales
