@@ -177,7 +177,9 @@ This will output **six** files:
 5) `Strict_Positive_Mean_Hits_Counts.csv` - table of normalised hit counts (counts that were sufficiently above background for edgeR to accept as a hit) of peptides for eachs sample.
 Each value is a mean across the replicates.
 6) `Antigen_Landscape_Ready_Table.csv` - a table generated for downstream antigen landscape plotting.
-The dataframe is compatible with functions coded by Bea & Legana.
+The dataframe is compatible with functions coded by [Bea and Legana](https://github.com/TheWookHub/enterovirus-antigens-kids-w-IA/blob/main/01_figure_01_CXVB_antigen_mapping.md).
+
+
 Example of `PositiveAgreement_Plot.pdf`:
 
 <img src="README_Figures/unnamed-chunk-6-1.png" title="Example Plot 1" width="1200" height="900"/>
