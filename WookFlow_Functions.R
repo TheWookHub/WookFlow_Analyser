@@ -673,6 +673,7 @@ make_PosAgreementPlot = function(ct_vs_pct_dt, min_count,min_percent,high_priori
 
 # generate table for antigen landscape functions to use in
 # calculate_mean_rpk_difference from bea and legana codes
+# NOTE: For now it is catered for ENDIA sampling naming convention.
 generate_antigen_landscape_df = function(mean_hits_counts_df, peptide_df,sample_df){
     sample_status_mod = sample_df %>% 
         select(sample_source, sample_status) %>% 
