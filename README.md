@@ -1,10 +1,6 @@
----
-editor_options: 
-  markdown: 
-    wrap: sentence
----
 
-## \# WookFlow Analyser (A post-WookFlow reporting tool)
+# WookFlow Analyser (A post-WookFlow reporting tool)
+------
 
 ## Introduction
 
