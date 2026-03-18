@@ -1,6 +1,5 @@
 
 # WookFlow Analyser (A post-WookFlow reporting tool)
-------
 
 ## Introduction
 
@@ -255,7 +254,7 @@ This flag tells WookFlow Analyser to output:
 
 The above list of files may grow in number as more data is analysed and new and/or better ways of looking at data arises.
 
-#### Contributors
+## Contributors
 
 Organisms involved in the development of this tool: 
 
