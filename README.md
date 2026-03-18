@@ -168,7 +168,9 @@ Rscript WookFlow_Analyser.R \
 --counts_table /PATH/TO/counts.csv 
 ```
 
-This will output **six** files: 1) `HighPriority_Sample_to_Species.csv` - a table that tells you which viruses have been identified as high priority in which sample.
+This will output **six** files: 
+
+1) `HighPriority_Sample_to_Species.csv` - a table that tells you which viruses have been identified as high priority in which sample.
 2) `HighPriority_Species_Peptide_Info.csv` - a table that details the information of peptides that contributed to species being categorised as high priority.
 3) `HighPriority_Species_Shared.csv` - viruses with peptide hits that satisfy conditions for being high priority while also been found in multiple samples.
 4) `PositiveAgreement_Plot.pdf` - A plot showing viral species (across all the samples) satisfying cutoff conditions (Top 5 viral species shown).
