@@ -236,6 +236,7 @@ h_priority_species_peptide_info %>%
     df_to_faa(file = "MANGO_High_Priority_Peptides_Enterovirus.fasta")
 
 
+# have to do the blast outside R
 ENDIA_blastp_evB1 <- read_blast("blast_results/blastp_endia_evB1_all_virscan_peps.blast")
 
 # Trying to make my data look the same

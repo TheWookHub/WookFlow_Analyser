@@ -328,6 +328,10 @@ main_function = function(
     # s_pos_hits_counts results
     output_csv(s_pos_mean_hits_counts,"Strict_Positive_Mean_Hits_Counts.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
     
+    # get the datatable ready for antigen landscape plotting functions
+    antigen_landscape_table = generate_antigen_landscape_df(s_pos_mean_hits_counts, peptide_table, sample_table)
+    output_csv(antigen_landscape_table,"Antigen_Landscape_Ready_Table.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
+    
     if(!is.null(comprehensive_output)){
         # raw h_priority
         output_csv(h_priority,"RawHighPriority_List.csv",DEFAULT_PREFIX,DEFAULT_OUTPUTDIR)
@@ -666,6 +670,48 @@ make_PosAgreementPlot = function(ct_vs_pct_dt, min_count,min_percent,high_priori
         theme(legend.position = "bottom",legend.key.size = unit(1,'line'))
     return(myPlot)
 } 
+
+# generate table for antigen landscape functions to use in
+# calculate_mean_rpk_difference from bea and legana codes
+generate_antigen_landscape_df = function(mean_hits_counts_df, peptide_df,sample_df){
+    sample_status_mod = sample_df %>% 
+        select(sample_source, sample_status) %>% 
+        filter(sample_status %in% c("case","control")) %>% 
+        distinct() %>% 
+        mutate(sample_status = str_to_title(sample_status))
+    
+    sample_prefix_2 = sample_df %>% 
+        filter(sample_status %in% c("case","control")) %>% 
+        select(sample_source) %>% 
+        distinct()
+    
+    resultDF = merge(
+        mean_hits_counts_df,
+        peptide_df %>% select(peptide_id,UniProtEntry,Prot_Start,Prot_End,Peptide_Length),
+        by = "peptide_id"
+    ) %>%
+        pivot_longer(cols = sample_prefix_2$sample_source, names_to = "participant_id", values_to = "abundance") %>%    
+        group_by(peptide_id) %>%
+        filter(any(abundance > 0)) %>%
+        ungroup() %>%
+        group_by(participant_id) %>%
+        filter(sum(abundance) != 0) %>%
+        ungroup() %>%
+        mutate(
+            sample_id = participant_id,
+            timepoint = str_extract(sample_id, "[^_]+$"),
+            participant_id = str_remove(participant_id,"_[^_]+$"),
+            .keep = "unused"
+        )
+    
+    final_results = merge(
+        resultDF,
+        sample_status_mod, 
+        by.x = "sample_id", 
+        by.y = 'sample_source'
+    )
+    return(final_results)
+}
 
 # Write output function
 output_csv = function(dt,filename,prefix,write_path){
